@@ -5,6 +5,7 @@ var Server = mongo.Server,
 	BSON = mongo.BSONPure;
 
 	server = new Server(process.env.OPENSHIFT_MONGODB_DB_HOST||'localhost', process.env.OPENSHIFT_MONGODB_DB_PORT||27017, {auto_reconnect: true});
+	
 /*
 MongoDB 2.2 database added.  Please make note of these credentials:
    Root User:     admin
@@ -17,6 +18,16 @@ Connection URL: mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/
 	db.open(function(err, db) {
 	    if(!err) {
 	        console.log("Connected to 'xtraxt' database");
+			if(process.env.NODE_ENV == "development"){
+				db.admin().authenticate('admin', 'U66Rer1V_lpf', function(de , db){
+				     if(e){
+				         console.log("could not authenticate");
+				     }else {
+				    console.log('auth connected to database :: ' );
+				     }
+				     });
+			}
+			
 	        db.collection('xtraxt', {strict:true}, function(err, collection) {
 	            if (err) {
 	                console.log("The 'xtraxt' collection doesn't exist. Creating it with sample data...");
