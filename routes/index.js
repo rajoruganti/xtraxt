@@ -21,7 +21,7 @@ Connection URL: mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/
 	        console.log("Connected to 'xtraxt' database");
 			if(process.env.NODE_ENV != "development"){
 				db.admin().authenticate('admin', 'U66Rer1V_lpf', function(de , db){
-				     if(e){
+				     if(de){
 				         console.log("could not authenticate");
 				     }else {
 				    console.log('auth connected to database :: ' );
