@@ -3,7 +3,8 @@ var mongo = require('mongodb');
 var Server = mongo.Server,
 	Db = mongo.Db,
 	BSON = mongo.BSONPure;
-
+	var dbUser = process.env.OPENSHIFT_MONGODB_DB_USERNAME;
+	var dbPass = process.env.OPENSHIFT_MONGODB_DB_PASSWORD;	
 	server = new Server(process.env.OPENSHIFT_MONGODB_DB_HOST||'localhost', process.env.OPENSHIFT_MONGODB_DB_PORT||27017, {auto_reconnect: true});
 	
 /*
@@ -18,7 +19,7 @@ Connection URL: mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/
 	db.open(function(err, db) {
 	    if(!err) {
 	        console.log("Connected to 'xtraxt' database");
-			if(process.env.NODE_ENV == "development"){
+			if(process.env.NODE_ENV != "development"){
 				db.admin().authenticate('admin', 'U66Rer1V_lpf', function(de , db){
 				     if(e){
 				         console.log("could not authenticate");
