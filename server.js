@@ -3,11 +3,15 @@
 var express = require('express');
 var fs      = require('fs');
 
+var path = require('path');
+var routes = require('./routes/index');
+
 
 /**
  *  Define the sample application.
  */
-var SampleApp = function() {
+
+var xtraxtApp = function() {
 
     //  Scope.
     var self = this;
@@ -109,8 +113,8 @@ var SampleApp = function() {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
         };
-    };
-
+		
+	};
 
     /**
      *  Initialize the server (express) and create the routes and register
@@ -118,11 +122,21 @@ var SampleApp = function() {
      */
     self.initializeServer = function() {
         self.createRoutes();
-        self.app = express.createServer();
+        //self.app = express.createServer();
+		self.app = express();
+		self.app.configure(function () {
+		
+		    self.app.use(express.logger('dev'));  /* 'default', 'short', 'tiny', 'dev' */
+		    self.app.use(express.bodyParser()),
+		    self.app.use(express.static(path.join(__dirname, 'public')));
+		});
+
+		self.app.post('/xtraxt', routes.xtraxt);
+		
 
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
+            self.app.post(r, self.routes[r]);
         }
     };
 
@@ -158,7 +172,7 @@ var SampleApp = function() {
 /**
  *  main():  Main code.
  */
-var zapp = new SampleApp();
+var zapp = new xtraxtApp();
 zapp.initialize();
 zapp.start();
 
