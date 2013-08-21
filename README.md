@@ -1,3 +1,5 @@
-The OpenShift `nodejs` cartridge documentation can be found at:
+Exrtact distracting content from webpages.
 
-https://github.com/openshift/origin-server/tree/master/cartridges/openshift-origin-cartridge-nodejs/README.md
+Uses readability , boilerpipe
+
+Created using node.js
